@@ -10,16 +10,48 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4f6f8}
 </style>
 </head>
 <body>
-<iframe id="app" src="app.html?v=711" title="AADIDESS Organigrama"></iframe>
+<iframe id="app" src="app.html?v=712" title="AADIDESS Organigrama"></iframe>
 <script>
 const f=document.getElementById('app');
 f.addEventListener('load',()=>{
   try{
     const d=f.contentDocument;
+    const w=f.contentWindow;
     const logo=d.querySelector('.brand-logo');
-    if(logo){logo.src='logo.svg?v=2';logo.removeAttribute('srcset');}
+    if(logo){logo.src='logo.svg?v=3';logo.removeAttribute('srcset');}
     const sub=d.querySelector('.sub');
-    if(sub && sub.textContent.includes('v7.10')) sub.textContent=sub.textContent.replace('v7.10','v7.11');
+    if(sub){sub.textContent=sub.textContent.replace(/v7\.\d+/,'v7.12');}
+
+    if(!d.getElementById('printPdfStyles')){
+      const st=d.createElement('style');
+      st.id='printPdfStyles';
+      st.textContent=`
+      @media print{
+        @page{size:landscape;margin:8mm}
+        html,body{width:auto!important;height:auto!important;overflow:visible!important;background:#fff!important}
+        body{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+        header{padding:0 0 6mm 0!important;border:0!important}
+        header .toolbar,.legend,.panel,.modal,.status{display:none!important}
+        main{padding:0!important}
+        .viewport{overflow:visible!important;border:0!important;border-radius:0!important;padding:0!important;width:990px!important;height:600px!important;background:#fff!important}
+        #canvas{transform:scale(.66)!important;transform-origin:top left!important}
+        .node.sel,.node.related{outline:none!important}
+      }`;
+      d.head.appendChild(st);
+    }
+
+    const toolbar=d.querySelector('header .toolbar');
+    if(toolbar && !d.getElementById('btnPrintPdf')){
+      const b=d.createElement('button');
+      b.id='btnPrintPdf';
+      b.textContent='Imprimir / Exportar PDF';
+      b.addEventListener('click',()=>{
+        try{ if(typeof w.clearSelection==='function') w.clearSelection(); }catch(e){}
+        setTimeout(()=>w.print(),80);
+      });
+      const reset=d.getElementById('btnReset');
+      if(reset) toolbar.insertBefore(b,reset); else toolbar.appendChild(b);
+    }
   }catch(e){}
   f.style.opacity='1';
 });
