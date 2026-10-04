@@ -10,7 +10,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4f6f8}
 </style>
 </head>
 <body>
-<iframe id="app" src="app.html?v=712" title="AADIDESS Organigrama"></iframe>
+<iframe id="app" src="app.html?v=713" title="AADIDESS Organigrama"></iframe>
 <script>
 const f=document.getElementById('app');
 f.addEventListener('load',()=>{
@@ -18,9 +18,9 @@ f.addEventListener('load',()=>{
     const d=f.contentDocument;
     const w=f.contentWindow;
     const logo=d.querySelector('.brand-logo');
-    if(logo){logo.src='logo.svg?v=3';logo.removeAttribute('srcset');}
+    if(logo){logo.src='logo.png?v=713';logo.removeAttribute('srcset');}
     const sub=d.querySelector('.sub');
-    if(sub){sub.textContent=sub.textContent.replace(/v7\.\d+/,'v7.12');}
+    if(sub){sub.textContent=sub.textContent.replace(/v7\.\d+/,'v7.13');}
 
     if(!d.getElementById('printPdfStyles')){
       const st=d.createElement('style');
