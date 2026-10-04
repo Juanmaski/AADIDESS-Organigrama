@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AADIDESS Organigrama Editable v7.10</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#17202a}
+header{padding:18px 22px;background:#fff;border-bottom:1px solid #ddd}h1{margin:0 0 5px;font-size:21px}
+.sub,.help,.status{font-size:12px;color:#667085}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{padding:8px 12px;border:1px solid #cfd5dc;border-radius:8px;background:#fff;cursor:pointer}.primary{background:#eef4ff;border-color:#9bb7e8}
+main{padding:20px}.legend{font-size:12px;color:#475467;margin-bottom:12px}.viewport{overflow:auto;background:#fff;border:1px solid #ddd;border-radius:12px;padding:25px}
+#canvas{position:relative;width:1500px;height:900px;background-image:radial-gradient(#d7dce2 1px,transparent 1px);background-size:20px 20px}
+#links{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.node{position:absolute;width:190px;min-height:76px;padding:11px;border:1.5px solid #aeb7c2;border-radius:10px;background:#fff;text-align:center;cursor:grab;user-select:none}
+.node strong{display:block;font-size:13px}.node small{display:block;margin-top:5px;font-size:10.5px;color:#667085}.node.stat{border-width:2px}.node.control{border-style:dashed}
+.node.academic{background:#eef4ff}.node.technical{background:#f1f8f4}.node.ops{background:#fff8eb}.node.sel{outline:3px solid rgba(36,87,166,.28);border-color:#2457a6}
+.node.related{outline:4px solid rgba(217,119,6,.28);border-color:#d97706}
+.panel{margin-top:18px;background:#fff;border:1px solid #ddd;border-radius:12px;padding:18px}.panel h2{font-size:17px;margin:0 0 5px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;font-size:12px;font-weight:bold;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:9px;border:1px solid #cfd5dc;border-radius:7px;font:inherit}.full{grid-column:1/-1}
+.relations{margin-top:14px;padding-top:10px;border-top:1px solid #eee;font-size:13px}.rel{padding:6px 0;border-bottom:1px solid #f2f2f2}
+.modal{display:none;position:fixed;inset:0;z-index:50;background:rgba(16,24,40,.5);padding:25px;overflow:auto}.modal.open{display:block}
+.modalbox{max-width:950px;margin:auto;background:#fff;border-radius:14px;padding:20px}.modalhead{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding-bottom:10px;margin-bottom:14px}
+.modalhead h2{margin:0;font-size:20px}.profilegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.profilegrid textarea{min-height:95px}
+@media(max-width:700px){main{padding:10px}.grid,.profilegrid{grid-template-columns:1fr}.full{grid-column:auto}.modal{padding:8px}}
+
+.brand{display:flex;align-items:center;gap:18px}
+.brand-logo{height:64px;width:auto;object-fit:contain;display:block}
+.brand-text{display:flex;flex-direction:column}
+@media(max-width:700px){.brand{align-items:flex-start}.brand-logo{height:48px}}
+
+
+.brand-wrap{display:flex;align-items:center;gap:18px}
+.brand-logo-box{background:#000;border-radius:10px;padding:8px 12px;display:flex;align-items:center}
+.brand-logo{display:block;height:68px;width:auto;max-width:380px}
+.brand-copy{display:flex;flex-direction:column}
+@media(max-width:700px){
+  .brand-wrap{align-items:flex-start;gap:10px;flex-direction:column}
+  .brand-logo{height:52px;max-width:290px}
+}
+
+
+#pPerson{min-height:120px;white-space:pre-wrap}
+
+</style>
+</head>
+<body>
+<header>
+<div class="brand-wrap">
+  <div class="brand-logo-box">
+    <img class="brand-logo" src="data:image/png;base64,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...TRUNCATED..." alt="Logo AADIDESS">
+  </div>
+  <div class="brand-copy">
+    <h1>AADIDESS — Organigrama + perfiles de puesto</h1>
+    <div class="sub">v7.10 · clic: selecciona y resalta relaciones · doble clic: abre perfil · arrastrar: mueve el área.</div>
+  </div>
+</div>
+<div class="toolbar">
+<button id="btnSave" class="primary">Guardar todo</button><button id="btnAdd">Agregar área/persona</button><button id="btnExport">Exportar JSON</button><button id="btnReset">Restablecer</button>
+</div>
+</header>
+<main>
+<div class="legend">Clic en un globo = resalta sus dependencias · Clic fuera de los globos = limpia el resaltado · Doble clic = perfil de puesto · Arrastrar = mover · El color se puede definir desde el editor · Línea continua = dependencia · Línea punteada = reporte funcional.</div>
+<div class="viewport"><div id="canvas"><svg id="links"></svg></div></div>
+<div class="panel" id="dependencyPanel">
+<h2>Editor de dependencias — <span id="selectedTitle">sin selección</span></h2>
+<div class="help">Seleccioná un globo. Si un sector DEPENDE de otro, usá “Dependencia jerárquica” (línea continua). Usá “Reporte funcional” solo para vínculos secundarios o de reporte (línea punteada).</div>
+<div id="emptyMessage">Seleccioná un área o persona.</div>
+<div id="dependencyForm" style="display:none">
+<div class="grid">
+<div class="field"><label>Nombre</label><input id="fName"></div>
+<div class="field"><label>Tipo</label><select id="fType">
+<option value="stat">Estatutario</option>
+<option value="control">Control independiente</option>
+<option value="academic">Académico</option>
+<option value="technical">Técnico</option>
+<option value="ops">Gestión / operativo</option>
+<option value="custom">Otro / personalizado</option>
+</select></div>
+<div class="field">
+<label>Paleta de colores predefinidos</label>
+<select id="fColorPreset">
+<option value="">Elegir color…</option>
+<option value="#ffffff">Estatutario — blanco</option>
+<option value="#ffffff">Control independiente — blanco</option>
+<option value="#eef4ff">Académico — azul claro</option>
+<option value="#f1f8f4">Técnico — verde claro</option>
+<option value="#fff8eb">Gestión / operativo — crema</option>
+</select>
+<div class="help">Esto cambia solo el color del globo; no modifica el tipo.</div>
+</div>
+<div class="field">
+<label>Color personalizado</label>
+<div style="display:flex;gap:8px;align-items:center">
+<input id="fColor" type="color" value="#ffffff" style="width:64px;height:40px;padding:3px">
+<button id="btnTypeColor" type="button">Usar color del tipo</button>
+</div>
+<div class="help">Podés elegir uno de la paleta o definir cualquier color manualmente.</div>
+</div>
+<div class="field"><label>Dependencia jerárquica — línea continua</label><select id="fParent"></select></div>
+<div class="field"><label>Reporte funcional — línea punteada</label><select id="fReport"></select></div>
+<div class="field full">
+<label>Texto visible de la relación</label>
+<input id="fRelationText">
+<div class="help">Aparece automáticamente según la dependencia. Podés editarlo libremente.</div>
+</div>
+<div class="field full"><label>Nota breve visible</label><textarea id="fNotes" rows="2"></textarea></div>
+</div>
+<div class="toolbar"><button id="btnApply" class="primary">Aplicar dependencias</button><button id="btnPromoteReport">Pasar reporte a dependencia directa</button><button id="btnProfile">Abrir perfil de puesto</button><button id="btnDelete">Eliminar</button></div>
+<div id="relations" class="relations"></div>
+</div>
+<div id="status" class="status"></div>
+</div>
+</main>
+<div id="profileModal" class="modal">
+<div class="modalbox">
+<div class="modalhead"><h2 id="profileTitle">Perfil de puesto</h2><button id="btnCloseProfile">Cerrar</button></div>
+<div class="profilegrid">
+<div class="field">
+<label>Responsable(s) / integrantes actuales</label>
+<textarea id="pPerson" rows="5" placeholder="Podés ingresar una o varias personas, una por línea.&#10;Ej.:&#10;Juan Pérez — Presidente&#10;Ana Gómez — Secretaria"></textarea>
+<div class="help">Para órganos colegiados como Comisión Directiva, Consejo Académico o Comité Técnico, ingresá todos los integrantes que correspondan.</div>
+</div>
+<div class="field"><label>Dependencia actual</label><input id="pReports" readonly></div>
+<div class="field full"><label>Propósito del puesto</label><textarea id="pPurpose"></textarea></div>
+<div class="field"><label>Responsabilidades principales</label><textarea id="pResponsibilities"></textarea></div>
+<div class="field"><label>Alcance / autoridad</label><textarea id="pScope"></textarea></div>
+<div class="field"><label>Competencias requeridas</label><textarea id="pCompetencies"></textarea></div>
+<div class="field"><label>Límites del puesto</label><textarea id="pLimits"></textarea></div>
+<div class="field"><label>Interacción interna</label><textarea id="pInternal"></textarea></div>
+<div class="field"><label>Interacción externa</label><textarea id="pExternal"></textarea></div>
+<div class="field full"><label>Objetivos / resultados esperados</label><textarea id="pObjectives"></textarea></div>
+<div class="field full"><label>Observaciones</label><textarea id="pNotes"></textarea></div>
+</div>
+<div class="toolbar"><button id="btnSaveProfile" class="primary">Guardar perfil</button><button id="btnCancelProfile">Cerrar sin guardar</button></div>
+</div>
+</div>
+<script>
+const BASE=[{"id":"assembly","name":"Asamblea de Delegados","type":"stat","parent":null,"report":null,"x":650,"y":30,"notes":"Autoridad superior."},{"id":"cd","name":"Comisión Directiva","type":"stat","parent":"assembly","report":null,"x":650,"y":150,"notes":"Conducción de la Asociación."},{"id":"audit","name":"Comisión Revisora de Cuentas","type":"control","parent":"assembly","report":null,"x":950,"y":150,"notes":"Órgano independiente de fiscalización."},{"id":"honor","name":"Tribunal de Honor y Disciplina","type":"control","parent":"assembly","report":null,"x":1150,"y":150,"notes":"Órgano independiente. No depende de CD."},{"id":"ce","name":"Comité Ejecutivo","type":"stat","parent":"cd","report":null,"x":70,"y":310,"notes":"Ejecuta determinaciones de CD."},{"id":"ca","name":"Consejo Académico (CA)","type":"academic","parent":"cd","report":null,"x":310,"y":310,"notes":"Depende de CD y reporta sus resoluciones a CD."},{"id":"ises","name":"Director de ISES","type":"academic","parent":"cd","report":null,"x":550,"y":310,"notes":"Integra el Consejo Académico."},{"id":"demohead","name":"Jefe de Demostradores","type":"technical","parent":"cd","report":null,"x":790,"y":310,"notes":"Reporta directamente a Comisión Directiva. Rama independiente del CA."},{"id":"admin","name":"Administración","type":"ops","parent":null,"report":null,"x":1030,"y":310,"notes":"Dependencia definitiva pendiente."},{"id":"secretaria","name":"Secretaría","type":"ops","parent":null,"report":null,"x":1270,"y":310,"notes":"Dependencia definitiva pendiente."},{"id":"dt","name":"Director Técnico","type":"technical","parent":"ca","report":null,"x":250,"y":500,"notes":"Integra el Consejo Académico."},{"id":"ct","name":"Comité Técnico (CT)","type":"technical","parent":"dt","report":"ca","x":250,"y":650,"notes":"Depende del Director Técnico y reporta al CA."},{"id":"coord","name":"Coordinador General","type":"academic","parent":"ises","report":null,"x":520,"y":500,"notes":"Depende del Director de ISES e integra el CA."},{"id":"courses","name":"Cursos","type":"academic","parent":"coord","report":null,"x":460,"y":650,"notes":"Depende del Coordinador General."},{"id":"teachers","name":"Profesores","type":"academic","parent":"coord","report":null,"x":670,"y":650,"notes":"Depende del Coordinador General."},{"id":"demoteam","name":"Equipo de Demostradores","type":"technical","parent":"demohead","report":null,"x":790,"y":500,"notes":"Depende del Jefe de Demostradores."},{"id":"intl","name":"Relaciones Internacionales","type":"ops","parent":null,"report":null,"x":1030,"y":500,"notes":"ISIA, Interski y relaciones institucionales internacionales. Dependencia pendiente."}];
+const EMPTY_PROFILE={person:"",purpose:"",responsibilities:"",scope:"",competencies:"",limits:"",internal:"",external:"",objectives:"",notes:""};
+BASE.forEach(function(n){n.profile=Object.assign({},EMPTY_PROFILE,n.profile||{});});
+function clone(x){return JSON.parse(JSON.stringify(x));}
+let data;
+try{
+ data=JSON.parse(localStorage.getItem("aadidess-v71")||localStorage.getItem("aadidess-v7")||"null")||clone(BASE);
+}catch(e){data=clone(BASE);}
+data.forEach(function(n){n.profile=Object.assign({},EMPTY_PROFILE,n.profile||{});});
+data.forEach(function(n){if(typeof n.relationText!=="string")n.relationText="";});
+data.forEach(function(n){if(typeof n.customColor!=="string")n.customColor="";});
+data.forEach(function(n){
+ if((n.parent||n.report) && (n.notes==="Dependencia definitiva pendiente."||n.notes==="Dependencia definitiva pendiente")) n.notes="";
+});
+let selected=null,dragId=null,offX=0,offY=0,startX=0,startY=0,moved=false,lastClickId=null,lastClickTime=0;
+const $=function(id){return document.getElementById(id);};
+const canvas=$("canvas"),svg=$("links"),status=$("status");
+function byId(id){return data.find(function(n){return n.id===id;});}
+function descendants(id){let out=[];function walk(x){data.filter(function(n){return n.parent===x;}).forEach(function(n){out.push(n.id);walk(n.id);});}walk(id);return out;}
+function defaultColorForType(type){const map={stat:"#ffffff",control:"#ffffff",academic:"#eef4ff",technical:"#f1f8f4",ops:"#fff8eb",custom:"#ffffff"};return map[type]||"#ffffff";}
+function normalizeHexColor(c){if(typeof c!=="string")return "";let m=c.trim().match(/^#([0-9a-fA-F]{6})$/);return m?("#"+m[1].toLowerCase()):"";}
+function autoRelationText(n){if(!n)return "";if(n.parent&&byId(n.parent))return "Depende de: "+byId(n.parent).name;if(n.report&&byId(n.report))return "Reporta a: "+byId(n.report).name;return "";}
+function relatedSet(id){let s=new Set();if(!id)return s;let n=byId(id);if(!n)return s;if(n.parent)s.add(n.parent);if(n.report)s.add(n.report);data.forEach(function(x){if(x.parent===id||x.report===id)s.add(x.id);});return s;}
+function connector(a,b,dashed,hot){if(!a||!b)return "";let x1=a.x+95,y1=a.y+76,x2=b.x+95,y2=b.y,mid=(y1+y2)/2;let d="M"+x1+" "+y1+" L"+x1+" "+mid+" L"+x2+" "+mid+" L"+x2+" "+y2;if(hot){return '<path d="'+d+'" fill="none" stroke="#ffffff" stroke-width="9" stroke-linejoin="round"/><path d="'+d+'" fill="none" stroke="#e66a00" stroke-width="5" stroke-linejoin="round" '+(dashed?'stroke-dasharray="10 7"':'')+'/>';}return '<path d="'+d+'" fill="none" stroke="'+(dashed?"#2457a6":"#98a2b3")+'" stroke-width="2.5" stroke-linejoin="round" '+(dashed?'stroke-dasharray="7 6"':'')+'/>';}
+function drawLinks(){let normal=[],hot=[];data.forEach(function(n){if(n.parent){let isHot=!!selected&&(n.id===selected||n.parent===selected);(isHot?hot:normal).push(connector(byId(n.parent),n,false,isHot));}if(n.report){let isHot=!!selected&&(n.id===selected||n.report===selected);(isHot?hot:normal).push(connector(n,byId(n.report),true,isHot));}});svg.innerHTML=normal.join("")+hot.join("");}
+function render(){canvas.querySelectorAll(".node").forEach(function(e){e.remove();});drawLinks();let rel=relatedSet(selected);data.forEach(function(n){let el=document.createElement("div");el.className="node "+n.type+(selected===n.id?" sel":"")+(rel.has(n.id)?" related":"");el.style.left=n.x+"px";el.style.top=n.y+"px";el.style.backgroundColor=normalizeHexColor(n.customColor)||defaultColorForType(n.type);let subtitle="";if(n.relationText&&n.relationText.trim()){subtitle=n.relationText.trim();}else if(autoRelationText(n)){subtitle=autoRelationText(n);}else if(n.notes&&n.notes.trim()!=="Dependencia definitiva pendiente."&&n.notes.trim()!=="Dependencia definitiva pendiente"){subtitle=n.notes;}el.title="Doble clic para abrir y editar el perfil de puesto";el.innerHTML="<strong>"+escapeHtml(n.name)+"</strong><small>"+escapeHtml(subtitle)+"</small>";el.addEventListener("pointerdown",function(e){dragId=n.id;startX=e.clientX;startY=e.clientY;moved=false;offX=e.clientX-n.x;offY=e.clientY-n.y;try{el.setPointerCapture(e.pointerId);}catch(_e){}});el.addEventListener("pointermove",function(e){if(dragId!==n.id)return;if(Math.abs(e.clientX-startX)>4||Math.abs(e.clientY-startY)>4)moved=true;if(moved){n.x=Math.max(0,Math.min(1310,e.clientX-offX));n.y=Math.max(0,Math.min(810,e.clientY-offY));el.style.left=n.x+"px";el.style.top=n.y+"px";drawLinks();}});el.addEventListener("pointerup",function(){dragId=null;if(moved){status.textContent="Posición modificada. Guardá para conservarla.";return;}let now=Date.now();let isDouble=(lastClickId===n.id&&(now-lastClickTime)<420);lastClickId=n.id;lastClickTime=now;selected=n.id;openEditor();render();if(isDouble){lastClickId=null;lastClickTime=0;showProfile(n.id);status.textContent="Perfil de puesto abierto: "+n.name+".";}else{status.textContent="Seleccionado: "+n.name+". Doble clic para abrir su perfil de puesto.";}});canvas.appendChild(el);});}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c];});}
+function parentOptions(current){let invalid=new Set([selected].concat(descendants(selected||"")));let out='<option value="">Sin dependencia / pendiente</option>';data.filter(function(n){return !invalid.has(n.id);}).forEach(function(n){out+='<option value="'+n.id+'"'+(n.id===current?' selected':'')+'>'+escapeHtml(n.name)+'</option>';});return out;}
+function reportOptions(current){let out='<option value="">Sin reporte funcional</option>';data.filter(function(n){return n.id!==selected;}).forEach(function(n){out+='<option value="'+n.id+'"'+(n.id===current?' selected':'')+'>'+escapeHtml(n.name)+'</option>';});return out;}
+function openEditor(){let n=byId(selected);if(!n)return;$("emptyMessage").style.display="none";$("dependencyForm").style.display="block";$("selectedTitle").textContent=n.name;$("fName").value=n.name;$("fType").value=n.type;let currentColor=normalizeHexColor(n.customColor)||defaultColorForType(n.type);$("fColor").value=currentColor;$("fColorPreset").value=["#ffffff","#eef4ff","#f1f8f4","#fff8eb"].includes(currentColor)?currentColor:"";$("fParent").innerHTML=parentOptions(n.parent);$("fReport").innerHTML=reportOptions(n.report);$("fRelationText").value=n.relationText||autoRelationText(n);$("fNotes").value=n.notes||"";let children=data.filter(function(x){return x.parent===n.id;}).map(function(x){return x.name;});let reports=data.filter(function(x){return x.report===n.id;}).map(function(x){return x.name;});$("relations").innerHTML="<b>Relaciones actuales</b><div class='rel'>Dependencia jerárquica (continua): "+(n.parent?escapeHtml(byId(n.parent).name):"—")+"</div><div class='rel'>Reporte funcional (punteada): "+(n.report?escapeHtml(byId(n.report).name):"—")+"</div><div class='rel'>Dependen de este puesto: "+(children.length?escapeHtml(children.join(", ")):"—")+"</div><div class='rel'>Reportan funcionalmente aquí: "+(reports.length?escapeHtml(reports.join(", ")):"—")+"</div>";}
+function clearSelection(){selected=null;$("dependencyForm").style.display="none";$("emptyMessage").style.display="block";$("selectedTitle").textContent="sin selección";status.textContent="";render();}
+function showProfile(id){let n=byId(id);if(!n)return;let p=n.profile||EMPTY_PROFILE;$("profileTitle").textContent="Perfil de puesto — "+n.name;$("pPerson").value=p.person||"";$("pReports").value=n.parent&&byId(n.parent)?byId(n.parent).name:"Sin dependencia definida";$("pPurpose").value=p.purpose||"";$("pResponsibilities").value=p.responsibilities||"";$("pScope").value=p.scope||"";$("pCompetencies").value=p.competencies||"";$("pLimits").value=p.limits||"";$("pInternal").value=p.internal||"";$("pExternal").value=p.external||"";$("pObjectives").value=p.objectives||"";$("pNotes").value=p.notes||"";$("profileModal").classList.add("open");}
+function hideProfile(){$("profileModal").classList.remove("open");}
+$("fColorPreset").addEventListener("change",function(){let c=$("fColorPreset").value;if(c)$("fColor").value=c;});
+$("fType").addEventListener("change",function(){let n=byId(selected);if(!n)return;if(!normalizeHexColor(n.customColor)){let c=defaultColorForType($("fType").value);$("fColor").value=c;$("fColorPreset").value=["#ffffff","#eef4ff","#f1f8f4","#fff8eb"].includes(c)?c:"";}});
+$("btnTypeColor").addEventListener("click",function(){if(!selected)return;let c=defaultColorForType($("fType").value);$("fColor").value=c;$("fColorPreset").value=["#ffffff","#eef4ff","#f1f8f4","#fff8eb"].includes(c)?c:"";let n=byId(selected);if(n)n.customColor="";status.textContent="Color restaurado al color automático del tipo.";render();openEditor();});
+canvas.addEventListener("pointerdown",function(e){if(e.target===canvas){clearSelection();}});
+$("btnApply").addEventListener("click",function(){let n=byId(selected);if(!n)return;n.name=$("fName").value.trim()||n.name;n.type=$("fType").value;let chosenColor=normalizeHexColor($("fColor").value);let typeColor=defaultColorForType(n.type);n.customColor=(chosenColor&&chosenColor!==typeColor)?chosenColor:"";n.parent=$("fParent").value||null;n.report=$("fReport").value||null;let typedRelation=$("fRelationText").value.trim();let automaticRelation=autoRelationText(n);n.relationText=(typedRelation&&typedRelation!==automaticRelation)?typedRelation:"";n.notes=$("fNotes").value.trim();if((n.parent||n.report)&&(n.notes==="Dependencia definitiva pendiente."||n.notes==="Dependencia definitiva pendiente")){n.notes="";}render();openEditor();status.textContent="Dependencias actualizadas.";});
+$("btnPromoteReport").addEventListener("click",function(){let n=byId(selected);if(!n)return;if(!n.report){status.textContent="Este sector no tiene un reporte funcional para convertir.";return;}n.parent=n.report;n.report=null;if(n.notes==="Dependencia definitiva pendiente."||n.notes==="Dependencia definitiva pendiente")n.notes="";render();openEditor();status.textContent="El vínculo fue convertido a dependencia directa (línea continua).";});
+$("btnSave").addEventListener("click",function(){localStorage.setItem("aadidess-v71",JSON.stringify(data));status.textContent="Guardado.";});
+$("btnAdd").addEventListener("click",function(){let id="area_"+Date.now();data.push({id:id,name:"Nueva área / puesto",type:"ops",parent:null,report:null,x:50,y:800,notes:"",relationText:"",customColor:"",profile:clone(EMPTY_PROFILE)});selected=id;render();openEditor();});
+$("btnDelete").addEventListener("click",function(){let n=byId(selected);if(!n)return;if(confirm("¿Eliminar "+n.name+"?")){data.forEach(function(x){if(x.parent===selected)x.parent=null;if(x.report===selected)x.report=null;});data=data.filter(function(x){return x.id!==selected;});selected=null;$("dependencyForm").style.display="none";$("emptyMessage").style.display="block";$("selectedTitle").textContent="sin selección";render();}});
+$("btnProfile").addEventListener("click",function(){if(selected)showProfile(selected);});
+$("btnCloseProfile").addEventListener("click",hideProfile);$("btnCancelProfile").addEventListener("click",hideProfile);$("profileModal").addEventListener("click",function(e){if(e.target===$("profileModal"))hideProfile();});
+$("btnSaveProfile").addEventListener("click",function(){let n=byId(selected);if(!n)return;n.profile={person:$("pPerson").value.trim(),purpose:$("pPurpose").value.trim(),responsibilities:$("pResponsibilities").value.trim(),scope:$("pScope").value.trim(),competencies:$("pCompetencies").value.trim(),limits:$("pLimits").value.trim(),internal:$("pInternal").value.trim(),external:$("pExternal").value.trim(),objectives:$("pObjectives").value.trim(),notes:$("pNotes").value.trim()};localStorage.setItem("aadidess-v71",JSON.stringify(data));hideProfile();status.textContent="Perfil guardado para "+n.name+".";});
+$("btnExport").addEventListener("click",function(){let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="AADIDESS_organigrama_v7.json";a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},1000);});
+$("btnReset").addEventListener("click",function(){if(confirm("¿Restablecer la versión base?")){data=clone(BASE);localStorage.removeItem("aadidess-v71");localStorage.removeItem("aadidess-v7");selected=null;$("dependencyForm").style.display="none";$("emptyMessage").style.display="block";$("selectedTitle").textContent="sin selección";render();}});
+render();
+</script>
+</body></html>
