@@ -1,2 +1,3 @@
 # AADIDESS-Organigrama
-Organigrama
+
+Organigrama editable de AADIDESS.
