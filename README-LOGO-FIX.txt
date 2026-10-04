@@ -1,0 +1,1 @@
+El logo correcto se servira como recurso binario.
